@@ -25,7 +25,39 @@ products = [
     {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
-print(products)
+#print(products)
 # pprint(products)
 
 # TODO: write some Python code here to produce the desired output
+
+#date and time requirements
+from datetime import datetime
+now = datetime.now()
+
+#user inputs
+
+#define local variable
+user_input = ""
+input_list = []
+
+#run user input while loop until DONE
+while (user_input != "DONE"):
+    user_input = input("Please input a product identifier:")
+
+    #append numeric input into the list
+    if user_input != "DONE":
+        user_input_int = int(user_input)
+        input_list.append(user_input_int)
+
+for x in input_list:
+    print(x)
+
+
+#interface output
+#print super market details 
+print("---------------------------------")
+print("PUBLIX SUPER MARKET")
+print("WWW.PUBLIX.COM")
+print("---------------------------------")
+print("CHECKOUT AT:", now.strftime("%Y-%m-%d %H:%M"))
+
