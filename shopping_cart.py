@@ -39,18 +39,16 @@ now = datetime.now()
 #define local variable
 user_input = ""
 input_list = []
+subtotal = 0
 
 #run user input while loop until DONE
 while (user_input != "DONE"):
-    user_input = input("Please input a product identifier:")
+    user_input = input("Please input a product identifier: ")
 
     #append numeric input into the list
     if user_input != "DONE":
         user_input_int = int(user_input)
         input_list.append(user_input_int)
-
-for x in input_list:
-    print(x)
 
 
 #interface output
@@ -59,5 +57,44 @@ print("---------------------------------")
 print("PUBLIX SUPER MARKET")
 print("WWW.PUBLIX.COM")
 print("---------------------------------")
-print("CHECKOUT AT:", now.strftime("%Y-%m-%d %H:%M"))
+#print out the current date and time 
+print("CHECKOUT AT:", now.strftime("%Y-%m-%d %I:%M %p"))
+print("---------------------------------")
+print("SELECTED PRODUCTS:")
 
+#run nested for loops in order to print the receipt
+for x in input_list:
+    
+    #define local variables
+    product_id = ""
+    product_price = 0
+
+    #run for loop to find name and price
+    for p in products:
+        #if statement to find right product
+        if x == p["id"]:
+            product_id = p["name"]
+            product_price = p["price"]
+    
+    #print the line item
+    print(" ...", product_id.title(), f"(${format(product_price, '.2f')})")
+
+    #keep a running total
+    subtotal += product_price
+
+print("---------------------------------")
+#print subtotal
+print("SUBTOTAL:", f"${format(subtotal, '.2f')}")
+
+#tax + total calculations
+tax_total = .0875 * subtotal
+
+print("TAX:", f"${format(tax_total, '.2f')}")
+
+total_price = tax_total + subtotal
+print("TOTAL:", f"${format(total_price, '.2f')}")
+
+print("---------------------------------")
+print("THANK YOU FOR SHOPPING WITH US TODAY!")
+print("CHECK OUT OUR WEBSITE OR CALL US AT 305-586-7219 FOR DELIVERY ORDERS!")
+print("---------------------------------")
