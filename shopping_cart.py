@@ -40,10 +40,14 @@ now = datetime.now()
 user_input = ""
 input_list = []
 subtotal = 0
+id_list = []
+
+
 
 #run user input while loop until DONE
 while (user_input != "DONE"):
-    user_input = input("Please input a product identifier: ")
+    user_input = input("Please input a product identifier, or 'DONE' if there are no more: ")
+
 
     #append numeric input into the list
     if user_input != "DONE":
@@ -71,13 +75,15 @@ for x in input_list:
 
     #run for loop to find name and price
     for p in products:
-        #if statement to find right product
+        #if statement to find right product (if identifier doesn't exist, it is ignored)
         if x == p["id"]:
             product_id = p["name"]
             product_price = p["price"]
+            #print the line item
+            print(" ...", product_id.title(), f"(${format(product_price, '.2f')})")
+
     
-    #print the line item
-    print(" ...", product_id.title(), f"(${format(product_price, '.2f')})")
+    
 
     #keep a running total
     subtotal += product_price
