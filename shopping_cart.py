@@ -104,3 +104,50 @@ print("---------------------------------")
 print("THANK YOU FOR SHOPPING WITH US TODAY!")
 print("CHECK OUT OUR WEBSITE OR CALL US AT 305-586-7219 FOR DELIVERY ORDERS!")
 print("---------------------------------")
+
+
+
+
+#email to receipt to the client
+
+import os
+from dotenv import load_dotenv
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+load_dotenv()
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID")
+MY_ADDRESS = os.environ.get("EMAIL")
+
+
+client = SendGridAPIClient(SENDGRID_API_KEY)
+print("CLIENT:", type(client))
+
+message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS)
+print("MESSAGE:", type(message))
+
+message.template_id = SENDGRID_TEMPLATE_ID
+
+message.dynamic_template_data = {
+    "total_price_usd": "$14.95",
+    "human_friendly_timestamp": "June 1st, 2019 10:00 AM",
+    "products":[
+        {"id":1, "name": "Product 1"},
+        {"id":2, "name": "Product 2"},
+        {"id":3, "name": "Product 3"},
+        {"id":2, "name": "Product 2"},
+        {"id":1, "name": "Product 1"}
+    ]
+} # or construct this dictionary dynamically based on the results of some other process :-D
+
+try:
+    response = client.send(message)
+    print("RESPONSE:", type(response))
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+
+except Exception as e:
+    print("OOPS", e)
