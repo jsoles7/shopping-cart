@@ -42,6 +42,9 @@ input_list = []
 subtotal = 0
 id_list = []
 
+#a list for the email component 
+products_list = []
+
 
 
 #run user input while loop until DONE
@@ -79,6 +82,10 @@ for x in input_list:
         if x == p["id"]:
             product_id = p["name"]
             product_price = p["price"]
+            #take the dictionary line item 
+            s = p
+            #append this item
+            products_list.append(s)
             #print the line item
             print(" ...", product_id.title(), f"(${format(product_price, '.2f')})")
 
@@ -99,7 +106,6 @@ print("TAX:", f"${format(tax_total, '.2f')}")
 
 total_price = tax_total + subtotal
 print("TOTAL:", f"${format(total_price, '.2f')}")
-
 print("---------------------------------")
 print("THANK YOU FOR SHOPPING WITH US TODAY!")
 print("CHECK OUT OUR WEBSITE OR CALL US AT 305-586-7219 FOR DELIVERY ORDERS!")
@@ -110,6 +116,8 @@ print("---------------------------------")
 
 #email to receipt to the client
 
+#the above code is taken from prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
+#variables and parameters of this code
 import os
 from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
@@ -120,26 +128,24 @@ load_dotenv()
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID")
 MY_ADDRESS = os.environ.get("EMAIL")
+SUBJECT = 'Your receipt from Publix'
 
 
 client = SendGridAPIClient(SENDGRID_API_KEY)
 print("CLIENT:", type(client))
 
-message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS)
+message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS, subject=SUBJECT)
 print("MESSAGE:", type(message))
 
 message.template_id = SENDGRID_TEMPLATE_ID
 
+#create some variables to send in the email
+email_price = f"${format(total_price, '.2f')}"
+
 message.dynamic_template_data = {
-    "total_price_usd": "$14.95",
-    "human_friendly_timestamp": "June 1st, 2019 10:00 AM",
-    "products":[
-        {"id":1, "name": "Product 1"},
-        {"id":2, "name": "Product 2"},
-        {"id":3, "name": "Product 3"},
-        {"id":2, "name": "Product 2"},
-        {"id":1, "name": "Product 1"}
-    ]
+    "total_price_usd": email_price,
+    "human_friendly_timestamp": now.strftime("%d-%m-%Y %I:%M %p"),
+    "products":products_list
 } # or construct this dictionary dynamically based on the results of some other process :-D
 
 try:
