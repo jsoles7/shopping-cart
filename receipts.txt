@@ -1,0 +1,12 @@
+SELECTED PRODUCTS: 
+CHECKOUT AT: 2020-02-04 04:57 PM
+Product: Robust Golden Unsweetened Oolong Tea;  Price: $2.49
+Product: Smart Ones Classic Favorites Mini Rigatoni With Vodka Cream Sauce;  Price: $6.99
+Product: Green Chile Anytime Sauce;  Price: $7.99
+Product: Pure Coconut Water With Orange;  Price: $3.50
+Product: Cut Russet Potatoes Steam N' Mash;  Price: $4.25
+SUBTOTAL: $25.22
+TAX: $2.21
+TOTAL: $27.43
+
+--- END ---

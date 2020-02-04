@@ -53,7 +53,7 @@ while (user_input != "DONE"):
 
 
     #append numeric input into the list
-    if user_input != "DONE":
+    if user_input != "DONE" and len(user_input) <= 1:
         user_input_int = int(user_input)
         input_list.append(user_input_int)
 
@@ -102,21 +102,67 @@ print("SUBTOTAL:", f"${format(subtotal, '.2f')}")
 #tax + total calculations
 tax_total = .0875 * subtotal
 
+#output tax
 print("TAX:", f"${format(tax_total, '.2f')}")
 
+#calculations for total
 total_price = tax_total + subtotal
+
+#output total
 print("TOTAL:", f"${format(total_price, '.2f')}")
 print("---------------------------------")
 print("THANK YOU FOR SHOPPING WITH US TODAY!")
 print("CHECK OUT OUR WEBSITE OR CALL US AT 305-586-7219 FOR DELIVERY ORDERS!")
 print("---------------------------------")
+print("")
+print("")
 
+#Save the receipt to a file
 
+#define file name
+file_name = "receipts.txt"  
+
+#write in the items to the file
+with open(file_name, "w") as file:
+
+    file.write("SELECTED PRODUCTS: \n")
+    file.write("CHECKOUT AT: ")
+    file.write(now.strftime("%Y-%m-%d %I:%M %p"))
+    file.write("\n")
+    #use a for loop to write the selected products and their prices
+    for p in products_list:
+        file.write("Product: ")
+        file.write(p["name"])
+        file.write(";  Price: ")
+        #create a local variable for price
+        price = p["price"]
+
+        file.write(f"${format(price, '.2f')}")
+        file.write("\n")
+
+    #output other essential items of the receipt - e.g. tax and totals
+    file.write("SUBTOTAL: ")
+    file.write(f"${format(subtotal, '.2f')}")
+    file.write("\n")
+    file.write("TAX: ")
+    file.write(f"${format(tax_total, '.2f')}")
+    file.write("\n")
+    file.write("TOTAL: ")
+    file.write(f"${format(total_price, '.2f')}")
+    file.write("\n")
+
+    #output ending message for organization 
+    file.write("\n")
+    file.write("--- END ---")
+    file.write("\n")
+
+#close the file
+file.close()
 
 
 #email to receipt to the client
 
-#the above code is taken from prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
+#the code below is taken from prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
 #variables and parameters of this code
 import os
 from dotenv import load_dotenv
