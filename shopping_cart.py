@@ -53,7 +53,7 @@ while (user_input != "DONE"):
 
 
     #append numeric input into the list
-    if user_input != "DONE" and len(user_input) <= 1:
+    if user_input != "DONE" and (user_input.isdigit() == 1):
         user_input_int = int(user_input)
         input_list.append(user_input_int)
 
@@ -120,7 +120,7 @@ print("")
 #Save the receipt to a file
 
 #define file name
-file_name = "receipts.txt"  
+file_name = str(now.strftime("%Y-%m-%d-%I-%M")) 
 
 #write in the items to the file
 with open(file_name, "w") as file:
