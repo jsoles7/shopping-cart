@@ -2,6 +2,14 @@
 
 #from pprint import pprint
 
+#packages import
+import pandas as pd
+import os
+
+#date and time requirements
+from datetime import datetime
+now = datetime.now()
+
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
     {"id":2, "name": "All-Seasons Salt", "department": "pantry", "aisle": "spices seasonings", "price": 4.99},
@@ -25,14 +33,17 @@ products = [
     {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
-#print(products)
-# pprint(products)
-
 # TODO: write some Python code here to produce the desired output
 
-#date and time requirements
-from datetime import datetime
-now = datetime.now()
+
+
+#importing the data from the CSV file 
+#read in CSV
+csv_filepath = os.path.join(os.path.dirname(__file__), "products.csv")
+product_data = pd.read_csv(csv_filepath)
+
+#convert CSV to dictionary
+product_data.to_dict()
 
 #user inputs
 
@@ -41,10 +52,10 @@ user_input = ""
 input_list = []
 subtotal = 0
 id_list = []
+x = 0
 
 #a list for the email component 
 products_list = []
-
 
 
 #run user input while loop until DONE
@@ -69,6 +80,7 @@ print("CHECKOUT AT:", now.strftime("%Y-%m-%d %I:%M %p"))
 print("---------------------------------")
 print("SELECTED PRODUCTS:")
 
+
 #run nested for loops in order to print the receipt
 for x in input_list:
     
@@ -77,13 +89,15 @@ for x in input_list:
     product_price = 0
 
     #run for loop to find name and price
-    for p in products:
+    for index, row in product_data.iterrows():
+
+        row_dict = row.to_dict()
         #if statement to find right product (if identifier doesn't exist, it is ignored)
-        if x == p["id"]:
-            product_id = p["name"]
-            product_price = p["price"]
+        if x == row["id"]:
+            product_id = row["name"]
+            product_price = row["price"]
             #take the dictionary line item 
-            s = p
+            s = row.to_dict()
             #append this item
             products_list.append(s)
             #print the line item
