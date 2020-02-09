@@ -10,6 +10,7 @@ import os
 from datetime import datetime
 now = datetime.now()
 
+#products dictionary... not really used due to CSV
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
     {"id":2, "name": "All-Seasons Salt", "department": "pantry", "aisle": "spices seasonings", "price": 4.99},
@@ -37,7 +38,7 @@ products = [
 
 
 
-#importing the data from the CSV file 
+#importing the data from the CSV file in an OS friendly way
 #read in CSV
 csv_filepath = os.path.join(os.path.dirname(__file__), "products.csv")
 product_data = pd.read_csv(csv_filepath)
