@@ -5,6 +5,7 @@
 #packages import
 import pandas as pd
 import os
+from dotenv import load_dotenv
 
 #date and time requirements
 from datetime import datetime
@@ -54,6 +55,8 @@ input_list = []
 subtotal = 0
 id_list = []
 x = 0
+tax_rate = float(os.environ.get("TAX_RATE"))
+
 
 #a list for the email component 
 products_list = []
@@ -115,7 +118,7 @@ print("---------------------------------")
 print("SUBTOTAL:", f"${format(subtotal, '.2f')}")
 
 #tax + total calculations
-tax_total = .0875 * subtotal
+tax_total = tax_rate * subtotal
 
 #output tax
 print("TAX:", f"${format(tax_total, '.2f')}")
@@ -179,8 +182,7 @@ file.close()
 
 #the code below is taken from prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
 #variables and parameters of this code
-import os
-from dotenv import load_dotenv
+
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
