@@ -200,6 +200,14 @@ from sendgrid.helpers.mail import Mail
 
 load_dotenv()
 
+#get customer email
+print("")
+CUST_ADDRESS = input("If the customer would like an emailed recepit, please enter their email: ")
+print("")
+print("")
+print("")
+
+
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID")
 MY_ADDRESS = os.environ.get("EMAIL")
@@ -209,7 +217,7 @@ SUBJECT = 'Your receipt from Publix'
 client = SendGridAPIClient(SENDGRID_API_KEY)
 print("CLIENT:", type(client))
 
-message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS, subject=SUBJECT)
+message = Mail(from_email=MY_ADDRESS, to_emails=CUST_ADDRESS, subject=SUBJECT)
 print("MESSAGE:", type(message))
 
 message.template_id = SENDGRID_TEMPLATE_ID
