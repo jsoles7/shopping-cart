@@ -6,6 +6,11 @@
 import pandas as pd
 import os
 from dotenv import load_dotenv
+from environs import Env
+
+#process the ENV file 
+env = Env()
+env.read_env()
 
 #date and time requirements
 from datetime import datetime
@@ -55,7 +60,8 @@ input_list = []
 subtotal = 0
 id_list = []
 x = 0
-tax_rate = float(os.environ.get("TAX_RATE"))
+TAX_RATE = env.float('TAX_RATE')
+
 
 
 #a list for the email component 
@@ -70,7 +76,12 @@ while (user_input != "DONE"):
     #append numeric input into the list
     if user_input != "DONE" and (user_input.isdigit() == 1):
         user_input_int = int(user_input)
-        input_list.append(user_input_int)
+        if user_input_int > len(products):
+            print("Hey, are you sure that product identifier is correct? Please try again!\n")
+        else:
+            input_list.append(user_input_int)
+    elif (user_input.isdigit() == 0) and user_input != "DONE":
+        print("Hey, are you sure that product identifier is correct? Please try again!\n")
 
 
 #interface output
@@ -118,7 +129,7 @@ print("---------------------------------")
 print("SUBTOTAL:", f"${format(subtotal, '.2f')}")
 
 #tax + total calculations
-tax_total = tax_rate * subtotal
+tax_total = TAX_RATE * subtotal
 
 #output tax
 print("TAX:", f"${format(tax_total, '.2f')}")
@@ -182,6 +193,7 @@ file.close()
 
 #the code below is taken from prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
 #variables and parameters of this code
+#NOTE: this is mostly his code
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
