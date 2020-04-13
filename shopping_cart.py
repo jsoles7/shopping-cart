@@ -16,6 +16,10 @@ env.read_env()
 from datetime import datetime
 now = datetime.now()
 
+#function to convert into USD format
+def to_usd(my_price):
+    return "${0:,.2f}".format(my_price)
+
 #products dictionary... not really used due to CSV
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -40,7 +44,6 @@ products = [
     {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
-# TODO: write some Python code here to produce the desired output
 
 
 
@@ -116,7 +119,7 @@ for x in input_list:
             #append this item
             products_list.append(s)
             #print the line item
-            print(" ...", product_id.title(), f"(${format(product_price, '.2f')})")
+            print(" ...", product_id.title(), to_usd(product_price))
 
     
     
@@ -126,19 +129,19 @@ for x in input_list:
 
 print("---------------------------------")
 #print subtotal
-print("SUBTOTAL:", f"${format(subtotal, '.2f')}")
+print("SUBTOTAL:", to_usd(subtotal)) 
 
 #tax + total calculations
 tax_total = TAX_RATE * subtotal
 
 #output tax
-print("TAX:", f"${format(tax_total, '.2f')}")
+print("TAX:", to_usd(tax_total))
 
 #calculations for total
 total_price = tax_total + subtotal
 
 #output total
-print("TOTAL:", f"${format(total_price, '.2f')}")
+print("TOTAL:", to_usd(total_price))
 print("---------------------------------")
 print("THANK YOU FOR SHOPPING WITH US TODAY!")
 print("CHECK OUT OUR WEBSITE OR CALL US AT 305-586-7219 FOR DELIVERY ORDERS!")
@@ -171,13 +174,13 @@ with open(file_name, "w") as file:
 
     #output other essential items of the receipt - e.g. tax and totals
     file.write("SUBTOTAL: ")
-    file.write(f"${format(subtotal, '.2f')}")
+    file.write(to_usd(subtotal))
     file.write("\n")
     file.write("TAX: ")
-    file.write(f"${format(tax_total, '.2f')}")
+    file.write(to_usd(tax_total))
     file.write("\n")
     file.write("TOTAL: ")
-    file.write(f"${format(total_price, '.2f')}")
+    file.write(to_usd(total_price))
     file.write("\n")
 
     #output ending message for organization 
@@ -223,7 +226,7 @@ print("MESSAGE:", type(message))
 message.template_id = SENDGRID_TEMPLATE_ID
 
 #create some variables to send in the email
-email_price = f"${format(total_price, '.2f')}"
+email_price = to_usd(total_price)
 
 message.dynamic_template_data = {
     "total_price_usd": email_price,
