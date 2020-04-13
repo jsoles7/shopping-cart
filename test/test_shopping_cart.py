@@ -1,6 +1,4 @@
-#tests for the script will be written here
-
-import pytest
+# shopping-cart/test/my_test.py
 
 from shopping_cart import to_usd
 
