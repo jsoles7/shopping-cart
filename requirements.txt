@@ -1,0 +1,4 @@
+pytest
+pandas
+sendgrid==6.0.5
+environs
