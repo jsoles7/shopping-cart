@@ -27,10 +27,7 @@ conda create -n shopping-env python=3.7 # (first time only) <br />
 conda activate shopping-env <br />
 <br />
 Proceed to download the following packages <br />
-- pip install python-dotenv <br />
-- pip install sendgrid==6.0.5 <br />
-- pip install pandas <br />
-- pip install environs <br />
+- pip install requirements.txt
 <br />
 Make sure to configure your env to fit the required variables: <br />
 - Sendgrid API KEY <br />
