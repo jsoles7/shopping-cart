@@ -2,6 +2,8 @@
 
 import pytest
 
+from shopping_cart import to_usd
+
 def test_to_usd():
     #Should apply correct formatting
     assert to_usd(7.25) == "$7.25"
