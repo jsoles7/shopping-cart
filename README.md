@@ -38,6 +38,23 @@ Make sure to configure your env to fit the required variables: <br />
 - An email address to use for sending and receiving emailed recepits <br />
 - Local tax rate <br />
 
+## The `sendgrid` Package
+
+
+The `sendgrid` package provides  emailing capabilities via the [SendGrid Email Delivery Service](https://sendgrid.com/solutions/email-api/). :mailbox_with_mail: :envelope:
+
+# Installation
+
+From within a virtual environment, install `sendgrid`, if necessary:
+
+```sh
+pip install sendgrid==6.0.5
+```
+
+First, [sign up for a free account](https://signup.sendgrid.com/), then click the link in a confirmation email to verify your account. Then [create an API Key](https://app.sendgrid.com/settings/api_keys) with "full access" permissions.
+
+To setup the usage examples below, store the API Key value in an environment variable called `SENDGRID_API_KEY`. Also set an environment variable called `MY_EMAIL_ADDRESS` to be the email address you just associated with your SendGrid account (e.g. "johndoe@gmail.com").
+
 
 ## Usage:
 Run the recommendation script: <br />
