@@ -4,6 +4,7 @@
 
 #packages import
 import pandas as pd
+import csv
 import os
 from dotenv import load_dotenv
 from environs import Env
@@ -13,6 +14,12 @@ from environs import Env
 #function to convert into USD format
 def to_usd(my_price):
     return "${0:,.2f}".format(my_price)
+
+#function to find product once given a product ID
+def find_product(id, product_list):
+    same_product = [p for p in product_list if str(p["id"]) == str(id)]
+    product = same_product[0]
+    return product
 
 
 if __name__ == "__main__":
@@ -49,13 +56,15 @@ if __name__ == "__main__":
         {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
     ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
+    product_data = []
 
     #importing the data from the CSV file in an OS friendly way
     csv_filepath = os.path.join(os.path.dirname(__file__), "products.csv")
-    product_data = pd.read_csv(csv_filepath)
+    with open(csv_filepath) as f:
+        reader = csv.DictReader(f)
+        product_data = [d for d in reader]
 
-    #convert CSV to dictionary
-    product_data.to_dict()
+
 
     #define local variable
     user_input = ""
@@ -103,30 +112,18 @@ if __name__ == "__main__":
     print("SELECTED PRODUCTS:")
 
 
-    #run nested for loops in order to print the receipt
-    for x in input_list:
-        
+    for inp in input_list:
+
         #define local variables
         product_id = ""
         product_price = 0
 
-        #run for loop to find name and price
-        for index, row in product_data.iterrows():
+        #run the fuction
+        matching_product = find_product(inp, product_data)
+        product_id = matching_product["name"]
+        product_price = float(matching_product["price"])
 
-            row_dict = row.to_dict()
-            #if statement to find right product (if identifier doesn't exist, it is ignored)
-            if x == row["id"]:
-                product_id = row["name"]
-                product_price = row["price"]
-                #take the dictionary line item 
-                s = row.to_dict()
-                #append this item
-                products_list.append(s)
-                #print the line item
-                print(" ...", product_id.title(), to_usd(product_price))
-
-        
-        
+        print(" ...", product_id.title(), to_usd(product_price))
 
         #keep a running total
         subtotal += product_price
@@ -197,54 +194,59 @@ if __name__ == "__main__":
     file.close()
 
 
-    #PART 4: Email to receipt to the client
+    answer = input("Would the customer like an emailed receipt (write NO if not)?")
+    answer = answer.upper()
 
-    #the code below is taken from Prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
-    #variables and parameters of this code
-    #NOTE: this is mostly his code
+    if answer != "NO":
 
-    from sendgrid import SendGridAPIClient
-    from sendgrid.helpers.mail import Mail
+        #PART 4: Email to receipt to the client
 
-    load_dotenv()
+        #the code below is taken from Prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
+        #variables and parameters of this code
+        #NOTE: this is mostly his code
 
-    #get customer email
-    print("")
-    CUST_ADDRESS = input("If the customer would like an emailed recepit, please enter their email: ")
-    print("")
-    print("")
-    print("")
+        from sendgrid import SendGridAPIClient
+        from sendgrid.helpers.mail import Mail
 
+        load_dotenv()
 
-    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
-    SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID")
-    MY_ADDRESS = os.environ.get("EMAIL")
-    SUBJECT = 'Your receipt from Publix'
+        #get customer email
+        print("")
+        CUST_ADDRESS = input("If the customer would like an emailed recepit, please enter their email: ")
+        print("")
+        print("")
+        print("")
 
 
-    client = SendGridAPIClient(SENDGRID_API_KEY)
-    print("CLIENT:", type(client))
+        SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+        SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID")
+        MY_ADDRESS = os.environ.get("EMAIL")
+        SUBJECT = 'Your receipt from Publix'
 
-    message = Mail(from_email=MY_ADDRESS, to_emails=CUST_ADDRESS, subject=SUBJECT)
-    print("MESSAGE:", type(message))
 
-    message.template_id = SENDGRID_TEMPLATE_ID
+        client = SendGridAPIClient(SENDGRID_API_KEY)
+        print("CLIENT:", type(client))
 
-    #create some variables to send in the email
-    email_price = to_usd(total_price)
+        message = Mail(from_email=MY_ADDRESS, to_emails=CUST_ADDRESS, subject=SUBJECT)
+        print("MESSAGE:", type(message))
 
-    message.dynamic_template_data = {
-        "total_price_usd": email_price,
-        "human_friendly_timestamp": now.strftime("%d-%m-%Y %I:%M %p"),
-        "products":products_list
-    } # or construct this dictionary dynamically based on the results of some other process :-D
+        message.template_id = SENDGRID_TEMPLATE_ID
 
-    try:
-        response = client.send(message)
-        print("RESPONSE:", type(response))
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        #create some variables to send in the email
+        email_price = to_usd(total_price)
 
-    except Exception as e:
-        print("OOPS", e)
+        message.dynamic_template_data = {
+            "total_price_usd": email_price,
+            "human_friendly_timestamp": now.strftime("%d-%m-%Y %I:%M %p"),
+            "products":products_list
+        } # or construct this dictionary dynamically based on the results of some other process :-D
+
+        try:
+            response = client.send(message)
+            print("RESPONSE:", type(response))
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+
+        except Exception as e:
+            print("OOPS", e)
