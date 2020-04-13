@@ -12,10 +12,21 @@ from environs import Env
 
 #function to convert into USD format
 def to_usd(my_price):
+    """
+        This function is used to convert float numbers passed to it to a formatted price in traditional US format.
+
+        Source: Prof. Rossetti's In class Example.
+
+    """
     return "${0:,.2f}".format(my_price)
 
 #function to find product once given a product ID
 def find_product(id, product_list):
+    """
+        This function is used to find the matching product when given a product ID and a dictionary of products.
+        It makes use of list comprehension in order to find the right product and return.
+
+    """
     same_product = [p for p in product_list if str(p["id"]) == str(id)]
     product = same_product[0]
     return product
@@ -126,6 +137,8 @@ if __name__ == "__main__":
 
         #keep a running total
         subtotal += product_price
+        #add to email list
+        products_list.append(matching_product)
 
     print("---------------------------------")
     #print subtotal
@@ -167,10 +180,7 @@ if __name__ == "__main__":
             file.write("Product: ")
             file.write(p["name"])
             file.write(";  Price: ")
-            #create a local variable for price
-            price = p["price"]
-
-            file.write(f"${format(price, '.2f')}")
+            file.write(to_usd(float(p["price"])))
             file.write("\n")
 
         #output other essential items of the receipt - e.g. tax and totals
