@@ -46,5 +46,13 @@ and send a receipt via email. <br />
 It will provide a subtotal, tax value, and total cost. <br />
 
 
+## Testing
+
+Run the test(s):
+
+```sh
+pytest
+```
+
 
 
