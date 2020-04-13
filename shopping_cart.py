@@ -45,17 +45,12 @@ products = [
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
 
-
-
 #importing the data from the CSV file in an OS friendly way
-#read in CSV
 csv_filepath = os.path.join(os.path.dirname(__file__), "products.csv")
 product_data = pd.read_csv(csv_filepath)
 
 #convert CSV to dictionary
 product_data.to_dict()
-
-#user inputs
 
 #define local variable
 user_input = ""
@@ -66,9 +61,10 @@ x = 0
 TAX_RATE = env.float('TAX_RATE')
 
 
-
 #a list for the email component 
 products_list = []
+
+#PART 1: Collect the Data
 
 
 #run user input while loop until DONE
@@ -86,6 +82,8 @@ while (user_input != "DONE"):
     elif (user_input.isdigit() == 0) and user_input != "DONE":
         print("Hey, are you sure that product identifier is correct? Please try again!\n")
 
+
+#PART 2: Output the Data
 
 #interface output
 #print super market details 
@@ -149,11 +147,12 @@ print("---------------------------------")
 print("")
 print("")
 
-#Save the receipt to a file
+
+
+#PART 3: Save the receipt to a file
 
 #define file name
 file_name = str(now.strftime("%Y-%m-%d-%I-%M")) 
-
 #write in the items to the file
 with open(file_name, "w") as file:
 
@@ -192,9 +191,9 @@ with open(file_name, "w") as file:
 file.close()
 
 
-#email to receipt to the client
+#PART 4: Email to receipt to the client
 
-#the code below is taken from prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
+#the code below is taken from Prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
 #variables and parameters of this code
 #NOTE: this is mostly his code
 
