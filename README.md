@@ -19,14 +19,18 @@ Python project focused on creating a groceries purchases processor and receipt b
 
 Fork the repo and clone it to your desktop. <br />
 Navigate to the file from the commandline: <br />
-- cd shopping-cart/ <br />
+```sh
+cd shopping-cart/ <br />
+```
 
 ## Setting up the Environment:
 conda create -n shopping-env python=3.7 # (first time only) <br />
 conda activate shopping-env <br />
 <br />
 Proceed to download the following packages <br />
-- pip install -r requirements.txt
+```sh
+pip install -r requirements.txt
+```
 <br />
 Make sure to configure your env to fit the required variables: <br />
 - Sendgrid API KEY <br />
