@@ -20,6 +20,7 @@ def test_to_usd():
 
 def test_find_product():
     
+    #create a quick list to test 
     product_list = [
         {"id":5, "name": "Green Chile Anytime Sauce", "department": "pantry", "aisle": "marinades meat preparation", "price": 7.99},
         {"id":6, "name": "Dry Nose Oil", "department": "personal care", "aisle": "cold flu allergy", "price": 21.99},

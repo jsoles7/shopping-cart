@@ -54,4 +54,7 @@ pytest
 ```
 
 
+## Code Climate Software Check:
+<a href="https://codeclimate.com/github/jsoles7/shopping-cart/maintainability"><img src="https://api.codeclimate.com/v1/badges/b8180925c174866084e1/maintainability" /></a>
+
 
