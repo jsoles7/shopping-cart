@@ -38,12 +38,12 @@ Make sure to configure your env to fit the required variables: <br />
 - An email address to use for sending and receiving emailed recepits <br />
 - Local tax rate <br />
 
-## The `sendgrid` Package
+### The `sendgrid` Package
 
 
 The `sendgrid` package provides  emailing capabilities via the [SendGrid Email Delivery Service](https://sendgrid.com/solutions/email-api/). :mailbox_with_mail: :envelope:
 
-# Installation
+### Installation
 
 From within a virtual environment, install `sendgrid`, if necessary:
 
