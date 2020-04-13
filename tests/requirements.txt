@@ -1,4 +1,4 @@
 pytest
 pandas
-sendgrid
+sendgrid==6.0.5
 environs
