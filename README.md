@@ -5,7 +5,7 @@ Python project focused on creating a groceries purchases processor and receipt b
 ## Prerequisites:
 - Anaconda 3.7 <br />
 - Python 3.7 <br />
-- Pip
+- Pip <br />
 
 ## Required Python Packages & Modules:
 - datetime <br />
