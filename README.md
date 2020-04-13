@@ -11,7 +11,6 @@ Python project focused on creating a groceries purchases processor and receipt b
 - datetime <br />
 - dotenv <br />
 - os <br />
-- pandas <br />
 - sendgrid <br />
 - environms <br />
 

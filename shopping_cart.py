@@ -3,7 +3,6 @@
 #from pprint import pprint
 
 #packages import
-import pandas as pd
 import csv
 import os
 from dotenv import load_dotenv
@@ -194,12 +193,13 @@ if __name__ == "__main__":
     file.close()
 
 
-    answer = input("Would the customer like an emailed receipt (write NO if not)?")
+    #PART 4: Email to receipt to the client
+    answer = input("Would the customer like an emailed receipt (write NO if not)? ")
     answer = answer.upper()
 
     if answer != "NO":
 
-        #PART 4: Email to receipt to the client
+        
 
         #the code below is taken from Prof. Rossetti's format for emailing content - this has been slightly adjusted to fit the
         #variables and parameters of this code
