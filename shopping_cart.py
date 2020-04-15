@@ -17,6 +17,9 @@ def to_usd(my_price):
 
         Source: Prof. Rossetti's In class Example.
 
+        @param: the my_price variable is a price input that comes as a float (e.g. 13.98570) and 
+                represents a variable that is supposed to be converted to a price format.
+
     """
     return "${0:,.2f}".format(my_price)
 
@@ -25,6 +28,9 @@ def find_product(id, product_list):
     """
         This function is used to find the matching product when given a product ID and a dictionary of products.
         It makes use of list comprehension in order to find the right product and return.
+
+        @param: this function has two variables: the first variable is a product ID code that is an integer;
+                the second variable is the product_list which is a dictionary variable that contains all the products.
 
     """
     same_product = [p for p in product_list if str(p["id"]) == str(id)]
